@@ -55,13 +55,13 @@ def generate():
   (DOCS/'tools'/'index.html').write_text(html_shell('行动工具箱',body,'..'),encoding='utf8')
   out=[]
   for i,(title,event,reason,five,mechanisms,action,branches,refs) in enumerate(CASES,1):
-    material=f'''# 案例{i:02d} · {title}\n\n## 情境\n\n{event}\n\n## 不要急着作人格判断\n\n{reason}\n\n## 用SSCM五维逐项核实\n\n{five}\n\n## 哪些机制正在发挥作用\n\n{mechanisms}\n\n## 一条可以尝试的行动路线\n\n{action}\n\n## 关键分支与边界\n\n{branches}\n\n## 延伸阅读\n\n{', '.join(f'第{n:02d}章' for n in refs)}\n\n> 这是理论应用的假设情境，不是实际访谈记录、心理诊断或已验证的干预案例。\n'''
+    material=f'''# 案例{i:02d} · {title}\n\n## 情境\n\n{event}\n\n## 不要急着作人格判断\n\n{reason}\n\n## 用SSCM五维逐项核实\n\n{five}\n\n## 哪些机制正在发挥作用\n\n{mechanisms}\n\n## 一条可以尝试的行动路线\n\n{action}\n\n## 关键分支与边界\n\n{branches}\n\n## 延伸阅读\n\n{', '.join(f'第{n:02d}章' for n in refs)}\n\n> 本案例仅作情境分析参考，不构成个案评估或专业诊断。\n'''
     (CONTENT/'cases'/f'case{i:02d}.md').write_text(material,encoding='utf8')
     fiveli=''.join(f'<li>{escape(x.strip())}</li>' for x in five.split('；'))
-    body=f'''<div class="guide"><div class="eyebrow">情境推演 / {i:02d} of 12</div><h1>{escape(title)}</h1><div class="info">以下是根据大学生活中可能出现的情形设计的示范分析，并非真实调查材料。若涉及紧急风险，先联系专业或紧急服务。</div><div class="bookarticle"><h2>事情是怎样发生的</h2><p>{escape(event)}</p><h2>先分清不同解释</h2><p>{escape(reason)}</p><h2>五维观察</h2><ul>{fiveli}</ul><h2>关系变化的机制</h2><p>{escape(mechanisms)}</p><h2>可执行的行动</h2><p>{escape(action)}</p><h2>不同条件下如何调整</h2><p>{escape(branches)}</p></div><p>相关章节：{'、'.join(f'<a href="../book/ch{n:02d}.html">第{n:02d}章</a>' for n in refs)}</p><p><a href="index.html">← 返回案例库</a></p></div>'''
+    body=f'''<div class="guide"><div class="eyebrow">情境推演 / {i:02d} of 12</div><h1>{escape(title)}</h1><div class="info">以下为教学示例，请按具体事实、学校规则和安全条件判断。若涉及紧急风险，先联系专业或紧急服务。</div><div class="bookarticle"><h2>事情是怎样发生的</h2><p>{escape(event)}</p><h2>先分清不同解释</h2><p>{escape(reason)}</p><h2>五维观察</h2><ul>{fiveli}</ul><h2>关系变化的机制</h2><p>{escape(mechanisms)}</p><h2>可执行的行动</h2><p>{escape(action)}</p><h2>不同条件下如何调整</h2><p>{escape(branches)}</p></div><p>相关章节：{'、'.join(f'<a href="../book/ch{n:02d}.html">第{n:02d}章</a>' for n in refs)}</p><p><a href="index.html">← 返回案例库</a></p></div>'''
     (DOCS/'cases'/f'case{i:02d}.html').write_text(html_shell(title,body,'..'),encoding='utf8')
     out.append(f'<a class="tool-card" href="case{i:02d}.html"><b>CASE {i:02d}</b><h3>{escape(title)}</h3><p>{escape(event[:80])}…</p></a>')
-  body=f'<div class="guide"><div class="eyebrow">示范推演 / 12 CASES</div><h1>12个详细情境分析</h1><p>从同一现象背后的不同条件出发，完整演示五维状态、变化机制、行动选择和分支判断。所有人物和情境均为教学设计，不代表实际调查结果。</p></div><div class="tool-grid">{"".join(out)}</div>'
+  body=f'<div class="guide"><div class="eyebrow">示范推演 / 12 CASES</div><h1>12个详细情境分析</h1><p>从同一现象背后的不同条件出发，完整演示五维状态、变化机制、行动选择和分支判断。本页使用示例情境帮助分析；具体问题请核实实际条件。</p></div><div class="tool-grid">{"".join(out)}</div>'
   (DOCS/'cases'/'index.html').write_text(html_shell('情境案例库',body,'..'),encoding='utf8')
   for fname,title in [('preface','阅读前言'),('model','SSCM模型速查')]:
     content=(CONTENT/'guides'/f'{fname}.md').read_text(encoding='utf8')

@@ -13,7 +13,13 @@ class Links(HTMLParser):
    if key in props:self.urls.append(props[key])
 
 files=list(docs.rglob('*.html'))
-assert len(files)==93,(len(files),'expected 93 HTML pages including seven deep-reading topics')
+assert len(files)==184,(len(files),'expected 92 zh + 92 en HTML pages')
+assert len(list((docs/'en/book').glob('ch*.html')))==50
+assert len(list((root/'content/en').glob('part*/ch*.md')))==50
+assert len(list((docs/'en/deep').glob('*.html')))==8
+assert len(list((docs/'en/tools').glob('tool*.html')))==12
+assert len(list((docs/'en/cases').glob('case*.html')))==12
+assert len(json.loads((docs/'en/search-index.json').read_text(encoding='utf8')))==50
 assert len(list((root/'content').glob('part*/ch*.md')))==50
 assert len(list((root/'content/tools').glob('tool*.md')))==12
 assert len(list((root/'content/cases').glob('case*.md')))==12
@@ -24,7 +30,8 @@ for route in routes:
  for field in ('primary','secondary'):
   assert (docs/route[field]).is_file(),(route['id'],field,route[field])
 assert len(json.loads((root/'content/evaluation/role-trials.json').read_text(encoding='utf8')))==21
-assert (docs/'reader-lab.html').exists() and (docs/'reader-lab.html').read_text(encoding='utf8').count('class="trial-card"')==21
+assert (docs/'practice.html').exists() and (docs/'practice.html').read_text(encoding='utf8').count('class="trial-card"')==21
+assert (docs/'en/practice.html').read_text(encoding='utf8').count('class="trial-card"')==21
 for t in json.loads((root/'content/evaluation/role-trials.json').read_text(encoding='utf8')):
  assert all(t.get(k) for k in ('scene','diagnosis','action','owner','boundary')) and t['route'] in {x['id'] for x in routes},t.get('id')
 assert (docs/'campus-policies.html').exists()
@@ -35,6 +42,9 @@ assert (root/'content/guides/decision-lab.md').exists()
 lab=(docs/'decision-lab.html').read_text(encoding='utf8')
 assert lab.count('<details>')==24, '12 cases must each have two contrasting branches'
 assert '情境分流' in (docs/'index.html').read_text(encoding='utf8')
+assert 'lang="en"' in (docs/'en/index.html').read_text(encoding='utf8')
+assert 'hreflang="en"' in (docs/'index.html').read_text(encoding='utf8')
+assert 'hreflang="zh-CN"' in (docs/'en/index.html').read_text(encoding='utf8')
 bad=[]
 for file in files:
  data=file.read_text(encoding='utf8');p=Links();p.feed(data)

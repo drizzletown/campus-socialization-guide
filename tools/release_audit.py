@@ -21,7 +21,7 @@ for page in pages:
     rel=page.relative_to(docs)
     s=page.read_text(encoding='utf8')
     parser=Page();parser.feed(s)
-    if '<html lang="zh-CN">' not in s: errors.append((rel,'missing lang'))
+    if not any(x in s for x in ('<html lang="zh-CN">','<html lang="en">')): errors.append((rel,'missing lang'))
     if '<meta name="viewport"' not in s: errors.append((rel,'missing responsive viewport'))
     if parser.h1!=1:errors.append((rel,'h1 count',parser.h1))
     if parser.external_assets:errors.append((rel,'risky element',parser.external_assets))
@@ -34,7 +34,7 @@ for path in root.rglob('*'):
     if path.is_file() and path.suffix in {'.md','.py','.js','.html','.json','.yml','.yaml','.txt','.css','.csv'}:
         try:path.read_text(encoding='utf-8')
         except UnicodeDecodeError: errors.append((path.relative_to(root),'not UTF-8'))
-for must in ('README.md','COPYRIGHT.md','CONTRIBUTING.md','SECURITY.md','PUBLISHING.md','RELEASE_CHECKLIST.md','docs/.nojekyll','docs/campus-policies.html','.github/workflows/verify.yml'):
+for must in ('README.md','COPYRIGHT.md','CONTRIBUTING.md','SECURITY.md','PUBLISHING.md','docs/.nojekyll','docs/campus-policies.html','.github/workflows/verify.yml'):
     if not (root/must).exists():errors.append((must,'missing release document'))
 for resource in ('docs/assets/site.css','docs/assets/site.js','docs/assets/search-core.js'):
     if not (root/resource).exists():errors.append((resource,'missing bundled asset'))

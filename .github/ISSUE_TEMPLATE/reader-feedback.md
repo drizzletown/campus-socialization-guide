@@ -1,20 +1,22 @@
 ---
-name: 阅读反馈与内容建议
-about: 提出某一章的表达、步骤、边界或可访问性改进建议
+name: Reading feedback / 阅读建议
+about: Report a typo, broken link, unclear explanation or accessibility problem / 反馈错字、链接和内容可读性问题
 ---
 
-## 涉及章节或工具
+## Page or chapter / 页面或章节
 
-例如：第11章宿舍共同生活 / 工具07边界与拒绝沟通卡。
+Provide the URL or chapter number. / 请填写链接或章节编号。
 
-## 建议修改的具体部分
+## What could be improved? / 具体问题
 
-请指出哪句话不清楚，或哪种实际事务没有被充分考虑。
+Describe a reproducible issue or an unclear passage. / 请说明具体、可复现的问题或不清楚的表述。
 
-## 你建议怎样调整
+## Proposed correction / 修改建议
 
-尽量围绕事实、不同条件下的判断、可执行步骤和安全边界提出建议。
+How would you improve the text or navigation? / 建议如何修改文字或导航？
 
-## 隐私提醒
+## Protect privacy / 隐私提醒
 
-**不要在公开 Issue 中填写真实姓名、学号、住址、电话、医疗记录、恋爱聊天、未公开科研资料、个案当事人身份或其他可识别信息。** 若涉及紧急安全风险，请先联系当地紧急服务及正式支持渠道，GitHub Issue 不能承担紧急处理。
+Do not post real students' names, IDs, addresses, passwords, health data, intimate messages, unpublished research or identifying details. GitHub Issues cannot provide emergency support.
+
+请勿公开真实学生的姓名、学号、地址、密码、健康信息、亲密聊天、未公开科研资料或个案身份。GitHub Issue 不是紧急求助渠道。

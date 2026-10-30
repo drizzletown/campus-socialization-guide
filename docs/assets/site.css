@@ -26,3 +26,6 @@
 /* Public release: prioritize content over a long per-volume menu on small screens.
    The first link still leads to the full volume directory. */
 @media(max-width:880px){.bookside h3,.bookside a:not(:first-child):not(.active):not(:last-child){display:none}.bookside{padding:10px 14px}.bookside a{padding:5px}}
+
+/* Bilingual public navigation and readable English typography */
+.topbar nav .lang-toggle{border:1px solid var(--accent);border-radius:18px;padding:3px 12px;color:var(--accent);font-weight:750;white-space:nowrap}.english-edition .bookarticle{font-family:Georgia,"Times New Roman",serif;line-height:1.85;letter-spacing:0}.english-edition .bookarticle h1,.english-edition .bookarticle h2,.english-edition .bookarticle h3{font-family:system-ui,-apple-system,sans-serif}.english-edition .hero h1{letter-spacing:-.035em}.english-edition .part-block{gap:30px}@media(max-width:560px){.topbar nav .lang-toggle{padding:2px 9px}}

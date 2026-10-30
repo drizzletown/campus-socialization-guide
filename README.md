@@ -1,49 +1,40 @@
 # 走进大学，学会与世界相处
 
-> 基于《大学生社会化的网络认知模型与自主行动逻辑》（SSCM）的大学生成长与行动读物。
+**Entering University, Learning to Live with the World**
 
-**公开发布候选版：v1.4.1（基于 v1.4 内容，完成发布技术与制度核验准备）。** v1.0原始内容已保留在历史交付包中。
+基于大学生社会化网络认知模型（Student Socialization Cognitive Model, SSCM）的中英文双语大学生活与成长行动读物。
 
-这是一套**全新撰写**的大学生社会化成长读物，不沿用此前24章读物的正文。它面向大学生活中的真实事务：课程学习、师生沟通、宿舍与家庭、朋友与亲密关系、社团和公共参与、科研与实习、网络生活、升学就业、权益保障及长期成长。
+A bilingual Chinese–English practical guide to learning, relationships, responsibility and informed action at university, based on SSCM.
 
-## 内容
+## 在线阅读 · Read online
 
-- 十辑、**50章完整正文**，每章包含情境、解释、五维观察、四项行动、**两种条件分支**、表达示例、边界和复盘；**50章均包含展开的深度情境推演**（v1.2完成全部章节的基础推演）。
-- **12张可编辑、可打印的行动工具卡**，提供事实核实、五维观察、合作分工、沟通协商、权益记录等支架。
-- **12个延伸情境案例**，演示相似现象为什么可能需要不同判断。
-- **12组情境分流练习**，不要求输入个人信息，面对条件差异直接获得有针对性的阅读入口与行动建议。
-- `BOOK_FULL.md`：适合在 GitHub 直接阅读和进一步编辑的全书连续版。
-- `content/guides/decision-lab.md`：12组情境分流练习及情境判断分支。
-- `PILOT_READING_GUIDE.md`：读者试用、认知检验和匿名反馈建议（网页为 `docs/pilot.html`）。
-- `EDITORIAL_AUDIT_v1.4.md`：上一版编辑改动、理论核对与未完成工作。
-- `docs/`：可以直接通过 GitHub Pages 发布的静态阅读网站，支持章节搜索、移动端浏览、打印和本地已读状态。
+- **中文 / Chinese:** https://drizzletown.github.io/campus-socialization-guide/
+- **English:** https://drizzletown.github.io/campus-socialization-guide/en/
 
-## 阅读入口
+每种语言均提供50章、七篇深读专题、12个情境案例、12张可填写的行动工具卡，以及情境判断与练习。页面顶部可切换语言，并返回当前对应的章节或功能页。
 
-- 在线站点首页：`docs/index.html`（发布后对应 GitHub Pages 根路径）
-- 全书：`BOOK_FULL.md`
-- **目录与覆盖矩阵**：`CONTENT_MATRIX.md`
-- 从现实难题快速进入：`docs/decision-lab.html`。
-- **21个模拟学生任务**：`docs/reader-lab.html`，可先做判断再展开参考答案。
-- 模型理论与使用边界：`content/guides/model.md`
-- 校园制度的核验方法与典型高校官方入口：`docs/campus-policies.html`
-- 阅读导言：`content/guides/preface.md`
+Both editions include 50 chapters, seven detailed guides, 12 cases, 12 editable worksheets and situation-based exercises. Use the language link in the top navigation to move between corresponding pages.
 
-## 发布到 GitHub Pages
+英文是按照相同主题和SSCM原则整理的**独立英文阅读版本**；部分表述较中文正文精简，并非逐句对应的法律效力或认证译文。
 
-1. 在 GitHub 上创建一个仓库，例如 `campus-socialization-guide`。
-2. 将本项目所有文件上传到仓库的 `main` 分支。
-3. 进入仓库 `Settings → Pages`。
-4. 在 `Build and deployment` 中选择 `Deploy from a branch`，分支 `main`，目录 `/docs`，然后保存。
-5. 等待 GitHub Pages 显示网站地址。项目网站通常会是 `https://<用户名>.github.io/campus-socialization-guide/`，请以 GitHub 页面显示的实际地址为准。
+The English edition is a stand-alone, shorter adaptation following the same chapter sequence and SSCM principles; it is not a certified line-by-line translation of the Chinese text.
 
-以上步骤只涉及静态网页，不需要后端、数据库、第三方账号登录或追踪服务。更详细操作见 `PUBLISHING.md`；发布后请按 `RELEASE_CHECKLIST.md` 做在线回归验收。
+## 全书与来源 · Book and sources
 
-## 如何修订章节
+- [中文连续阅读 / Chinese book](BOOK_FULL.md)
+- [English complete reading edition](BOOK_EN.md)
+- `content/part01/` – `content/part10/`：可编辑中文权威章节
+- `content/en/part01/` – `content/en/part10/`：可编辑英文对应章节
+- `content/deep/`、`content/en/deep/`：中英文专题
+- `docs/`：GitHub Pages 静态网页；`docs/en/`：英文版网页
 
-`content/part01/` 至 `content/part10/` 中的 `.md` 文件是**权威可编辑正文**。不要直接把生成的 `docs/book/*.html` 当成源稿。
+SSCM所采用的五个观察维度为个人能力、社会网络、社会角色、价值贡献与行动自主性；它们不构成测评总分。读者应核实事实与规则，区分不同解释，并在充分考虑安全、权责和现实条件的情况下行动。
 
-本地安装 Python 3.13（与 GitHub Actions 校验版本一致）：
+SSCM examines capability, accessible networks, roles, actual contribution and autonomy. These are lenses for situated judgment, not scores or personality labels.
+
+## 本地更新 · Local build
+
+需要 Python 3.13、Node.js 22（检索回归测试使用），以及 `requirements.txt` 中的 Python 包。
 
 ```bash
 python -m pip install -r requirements.txt
@@ -51,48 +42,19 @@ python build.py
 python extras.py
 python decision_lab.py
 python reader_lab.py
+python bilingual.py
 python tools/validate.py
 python tools/release_audit.py
+node --check docs/en/site-en.js
 node tools/simulated_reader_trial.js
 ```
 
-- `build.py` 根据 Markdown 章节生成网页、搜索索引和连续阅读版。
-- `extras.py` 根据工具卡、案例库源数据生成相应页面。
-- `decision_lab.py` 根据12组情境分流配置生成网站练习页和 `content/guides/decision-lab.md`。
-- `reader_lab.py` 根据21个虚构学生问题生成 `docs/reader-lab.html` 和可编辑Markdown。
-- `content/search/intent-routes.json` 是可编辑的21条自然语言阅读路径表；`docs/assets/search-core.js` 与 `tools/simulated_reader_trial.js` 使用同一排序规则。
-- 提交修订时同时提交 Markdown 源稿与重新生成的 `docs/` 网站文件。
-- 工作纸与案例内容目前以 `extras.py` 为生成源；修改它们时请编辑该脚本的数据区，然后运行 `python extras.py`。
+构建后将源文件与生成的 `docs/` 一并提交到 `main`，GitHub Pages 使用 `/docs` 目录。不要直接手工修改生成的 HTML 页面后忘记同步对应的 Markdown 或数据源。
 
-完整内容可供浏览和讨论。**公开仓库不自动授予改编或商业使用许可**。目前不授予复制、改编、分发的开放许可；详见 `COPYRIGHT.md`。如果作者希望开放改编或商业使用，应明确选择许可证并单独发布新版本。
+## 安全、隐私与版权 · Safety, privacy and rights
 
-## 重要声明
+网站是纯静态页面，无需登录。已读标记仅存于浏览器，工具卡内容不自动上传或保存。案例是用于解释的假设情境，个人事务应以实际事实、现行制度和专业支持为准；出现紧急危险时优先求助当地紧急服务。
 
-SSCM 是情境化的概念认知模型，不是经过完整验证的成长量表，不用于人格评级、心理诊断或给学生打分。案例均为构造的教学情境；本书不能替代医疗、法律、金融或紧急安全方面的专业服务。规则以具体学校、地区和时间的正式制度为准。
+The site is static and requires no account. It does not upload worksheet entries. Illustrative cases are not individualized professional advice. Use current institutional rules and local emergency services where appropriate.
 
-本站不收集或上传个人填写信息。“已读”标记只以章节编号保存在当前浏览器本地；工作纸不会自动保存所填文本，也不要求输入敏感信息。
-
-
-## v1.3 新增：以读者问题为入口的深读专题
-
-- 在 `content/deep/` 中新增七篇独立专题：课程求助、宿舍生活、科研、学生组织、亲密关系、就业实习、权益与安全。
-- 17个重点章节增补不重复的条件推理，明确学生责任、组织支持、现实边界；50章目录保持不变。
-- 重建网站后，从首页、主导航以及相关章节可进入 `/docs/deep/index.html`。
-- 新增内容仅为编辑构造的教学情境，并非真实学生试读或已验证的干预研究。正式发布前请复核适用学校制度、处理渠道与地区法律。
-- 推荐下一步先开展匿名、知情自愿的真实读者试用，再继续迭代。
-
-## v1.4 本轮改动与限制
-
-以七类常见困难构造21个模拟学生问题，新增20条转述检索、8条模糊问题误路由检查；七个章节和七篇专题作定点修订。旧版对21条完整问句均没有直接命中，新版对21条均将预设主题排第一；20条转述中19条第一、1条前三。**这些词句和答案都由编辑构造，不是人类学生试读数据**。当前静态代码只做离线关键词路由，不会准确理解所有自然语言，复杂问题请人工核实。完整记录见 `EDITORIAL_AUDIT_v1.4.md`。
-
-所有上传文件仍需主动避开个人和第三方敏感信息；GitHub Issue是公开页面，不能用于危机求助。新版尚未完成浏览器视觉验收，未正式部署 GitHub Pages。
-
-## 发布前与维护
-
-- `PUBLISHING.md`：新仓库初始化和 GitHub Pages 配置。
-- `RELEASE_CHECKLIST.md`：上线前/上线后验收表及当前剩余条件。
-- `COPYRIGHT.md`：阅读与再利用的权利边界（**暂未采用开源许可**）。
-- `CONTRIBUTING.md`：如何反馈或修订，避免公开敏感信息。
-- `SECURITY.md`：静态网站安全、敏感信息和风险通报说明。
-
-实际发布地址只能在新仓库创建及 Pages 部署成功后确认。校规与伦理内容的判断不构成法律、医疗或学校办事保证；请以适用正式制度为准。
+公开阅读不等于已授予复制、改编或商业使用许可。详见 [COPYRIGHT.md](COPYRIGHT.md)。欢迎提交不包含真实敏感信息的勘误和可用性建议，参见 [CONTRIBUTING.md](CONTRIBUTING.md)。
