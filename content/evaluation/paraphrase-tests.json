@@ -1,0 +1,82 @@
+[
+  {
+    "query": "作业系统吞了我的提交",
+    "route": "course-grade"
+  },
+  {
+    "query": "约不到老师给我答疑",
+    "route": "course-support"
+  },
+  {
+    "query": "我在组里共享文件打不开",
+    "route": "course-group"
+  },
+  {
+    "query": "舍友凌晨吵得我根本没法睡",
+    "route": "dorm-noise"
+  },
+  {
+    "query": "有人在宿舍偷拍视频",
+    "route": "dorm-threat"
+  },
+  {
+    "query": "他们没问就把我的物品拿走",
+    "route": "dorm-belonging"
+  },
+  {
+    "query": "我应该怎样申请实验室",
+    "route": "research-entry"
+  },
+  {
+    "query": "导师让我复制未发表数据",
+    "route": "research-data"
+  },
+  {
+    "query": "我的成果被抢署名",
+    "route": "research-credit"
+  },
+  {
+    "query": "组织要我个人垫钱买物资",
+    "route": "club-money"
+  },
+  {
+    "query": "社团评奖名单内部定",
+    "route": "club-fairness"
+  },
+  {
+    "query": "成员被要求每晚加班",
+    "route": "club-work"
+  },
+  {
+    "query": "恋人要看我的聊天记录",
+    "route": "relation-password"
+  },
+  {
+    "query": "分手后他跑来堵门",
+    "route": "relation-stalk"
+  },
+  {
+    "query": "很多岗位投递无回复",
+    "route": "career-replies"
+  },
+  {
+    "query": "公司面试时先缴费才能继续",
+    "route": "career-deposit"
+  },
+  {
+    "query": "单位让我发客户名单到自己邮箱",
+    "route": "career-data"
+  },
+  {
+    "query": "综测分数没算对",
+    "route": "rights-award"
+  },
+  {
+    "query": "被投诉老师让我直接找他谈",
+    "route": "rights-reprisals"
+  },
+  {
+    "query": "操场上有人晕倒了",
+    "route": "rights-emergency"
+  }
+]

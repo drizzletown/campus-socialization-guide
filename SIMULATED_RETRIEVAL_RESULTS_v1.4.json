@@ -1,0 +1,23 @@
+{
+  "summary": [
+    {
+      "label": "模拟读者（21个案例）",
+      "total": 21,
+      "top1": 21,
+      "top3": 0,
+      "miss": 0,
+      "oldHit": 0
+    },
+    {
+      "label": "转述问题（20条）",
+      "total": 20,
+      "top1": 19,
+      "top3": 1,
+      "miss": 0,
+      "oldHit": 0
+    }
+  ],
+  "failures": [],
+  "negativeTotal": 8,
+  "overlySpecific": []
+}
