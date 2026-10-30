@@ -6,6 +6,7 @@ Run from project root: python build.py
 from pathlib import Path
 from html import escape
 import re,json
+from volume_intros import ZH as VOLUME_INTROS_ZH
 import mistune
 
 ROOT=Path(__file__).parent
@@ -75,6 +76,14 @@ def build_deep():
     (deep_dir/'index.html').write_text(html_shell('七类高频问题深读',body,'..'),encoding='utf8')
     print('Generated 7 deep-reading topics and landing page')
 
+def build_volumes():
+    dest=DOCS/'volumes';dest.mkdir(parents=True,exist_ok=True)
+    for p in range(1,11):
+        source=(CONTENT/'volumes'/f'part{p:02d}.md').read_text(encoding='utf8')
+        body='<div class="guide"><p><a href="../index.html#part'+str(p)+'">← 返回本辑目录</a></p><article class="bookarticle">'+md(source)+'</article><p><a href="../book/ch'+f'{(p-1)*5+1:02d}'+'.html">开始阅读本辑第一章 →</a></p></div>'
+        (dest/f'part{p:02d}.html').write_text(html_shell(f'第{p}辑导论',body,'..'),encoding='utf8')
+    print('Generated 10 Chinese volume essays')
+
 def render_ch(d,ds):
     n=d['id'];p=d['part']; prev=f'ch{n-1:02d}.html' if n>1 else None;next=f'ch{n+1:02d}.html' if n<50 else None
     txt=d["markdown"]
@@ -83,20 +92,20 @@ def render_ch(d,ds):
     nav+=f'<a href="{next}" rel="next">下一章 →</a>' if next else '<span></span>'
     deep_links=''.join(f'<a href="../deep/{slug}.html">深入阅读：{escape(label)} ↗</a>' for slug,label,chapters in DEEP_TOPICS if n in chapters)
     extra=f'<div class="info"><strong>关联专题：</strong>{deep_links}</div>' if deep_links else ''
-    body=f'''<div class="read-layout"><aside class="bookside"><a href="../index.html#part{p}">← 第{p}辑 · {escape(VOL[p-1][0])}</a><h3>本辑章节</h3>{side}<a href="../tools/index.html">行动工具箱 ↗</a></aside><div class="reader"><div class="chapter-meta">第{p}辑 · {escape(VOL[p-1][0])} <span>｜</span> {escape(' / '.join(d['tags']))}</div><div class="reading-actions"><span>第 {n} / 50 章</span><button type="button" class="done" data-complete="{n}">标记已读</button><button type="button" data-print="true">打印本章</button></div><article class="bookarticle">{md(clean_front(txt))}</article>{extra}<div class="chapter-nav">{nav}</div></div></div>'''
+    body=f'''<div class="read-layout"><aside class="bookside"><a href="../index.html#part{p}">← 第{p}辑 · {escape(VOL[p-1][0])}</a><h3>本辑章节</h3><a href="../volumes/part{p:02d}.html">本辑导论 ↗</a>{side}<a href="../tools/index.html">行动工具箱 ↗</a></aside><div class="reader"><div class="chapter-meta">第{p}辑 · {escape(VOL[p-1][0])} <span>｜</span> {escape(' / '.join(d['tags']))}</div><div class="reading-actions"><span>第 {n} / 50 章</span><button type="button" class="done" data-complete="{n}">标记已读</button><button type="button" data-print="true">打印本章</button></div><article class="bookarticle">{md(clean_front(txt))}</article>{extra}<div class="chapter-nav">{nav}</div>{'<p><a href="../afterword.html">阅读全书结语 →</a></p>' if n==50 else ''}</div></div>'''
     (BOOK/f'ch{n:02d}.html').write_text(html_shell(d['title'],body,'..',d['markdown'][:150].replace('\n',' ')),encoding='utf8')
 
 def main_index(ds):
     part_section=''
     for p,(name,desc,kicker) in enumerate(VOL,1):
         items=''.join(f'<a class="chlink" href="book/ch{c["id"]:02d}.html"><span>{c["id"]:02d}</span>{escape(c["title"])}<span aria-hidden="true">↗</span></a>' for c in ds if c['part']==p)
-        part_section+=f'<section class="part-block" id="part{p}"><div><div class="eyebrow">第{p}辑 · {escape(kicker)}</div><h3>{escape(name)}</h3><p>{escape(desc)}</p></div><div class="chapterlist">{items}</div></section>'
+        part_section+=f'<section class="part-block" id="part{p}"><div><div class="eyebrow">第{p}辑 · {escape(kicker)}</div><h3>{escape(name)}</h3><p>{escape(VOLUME_INTROS_ZH[p-1])}</p><p><a href="volumes/part{p:02d}.html">阅读本辑导论 →</a></p></div><div class="chapterlist">{items}</div></section>'
     problems=[('刚到大学，什么都不熟悉',[1,2,5,6,11]),('课程压力大，不知道怎么求助',[7,8,12,14]),('小组作业有人不负责',[9,18,47]),('宿舍或同学关系冲突',[11,17,18,44]),('不想参加聚会，又怕得罪人',[16,20,21,25]),('遭遇不合理要求',[20,22,41,42]),('想做科研或参加比赛',[26,27,28,29]),('社团负责人难以协调工作',[22,24,25,47]),('总被社交媒体比较困扰',[31,32,33]),('不确定怎样使用AI工具',[10,34,35]),('在犹豫转专业、升学或就业',[36,37,38,48]),('遇到欺凌、风险或紧急问题',[35,41,42,45])]
     probs=''.join(f'<div class="problem"><div>{escape(q)}</div><p>{" · ".join(f"<a href=\"book/ch{n:02d}.html\">第{n:02d}章</a>" for n in ns)}</p></div>' for q,ns in problems)
     body=f'''<section class="hero"><div class="eyebrow">SSCM · 大学生社会化行动读物</div><h1>走进大学，<em>学会与世界相处。</em></h1><p class="lead">一部从社会网络、能力、角色、贡献和自主选择出发的大学生成长行动读物。50章 · 10辑 · 12张行动工具卡。没有社交排名，也不要求你变成另一种人。</p><div class="hero-actions"><a class="primary" href="book/ch01.html">从第一章开始 →</a><a class="secondary" href="decision-lab.html">我正在遇到一个问题</a><a class="secondary" href="book-all.html">连续阅读全书</a></div><div class="hero-points"><div><b>看见</b><span>把感觉化成可核实的事实</span></div><div><b>判断</b><span>区分能力、机会与权责</span></div><div><b>行动</b><span>选择能承担的第一步</span></div><div><b>修正</b><span>根据反馈改变方案</span></div></div></section>
 <section class="search-area" id="search"><div class="eyebrow">快速检索</div><h2>从一个真实的问题开始</h2><label for="query">搜索章节标题、关键词或内容</label><input id="query" class="searchbox" type="search" placeholder="例如：室友半夜连麦我睡不着；投简历没人回应……" autocomplete="off"><p id="count" class="muted" aria-live="polite">输入关键词即可搜索全书，也可以描述遇到的事情</p><p class="muted">检索仅提供阅读入口，不判断事实或危险等级。涉及即时人身危险，请优先寻求当地紧急服务。</p><div id="results" class="search-results" aria-live="polite"></div></section>
-<section id="problems"><div class="eyebrow">按问题阅读</div><h2>不必从头读到尾</h2><p>先看和你眼前事务最有关的章节，再决定是否继续追问。每个入口都可以根据实际情况跳转。</p><div class="problem-grid">{probs}</div></section><section class="search-area"><div class="eyebrow">七类高频问题</div><h2>问题复杂时，再读一篇完整推演</h2><p>七类高频问题专题分别说明不同情境、组织责任与风险边界；可先通过自然语言搜索，或直接查看专题与情境练习。</p><a class="primary" href="deep/index.html">打开七类问题深读 →</a> <a class="secondary" href="practice.html">练习21个实际问题情境 →</a></section><section id="read"><div class="eyebrow">全书目录</div><h2>十辑，五十件值得认真讨论的事</h2><p>章节并非能力等级，也没有固定阅读年龄、年级或先后阶段。</p>{part_section}</section>
-<section class="bottom-banner"><h2>遇到难事，可以先拿出一张工具卡。</h2><p>把事实、解释、权责、备选行动和反馈写清楚；可以直接打印，不必填写真实姓名或敏感资料。</p><a class="primary" href="tools/index.html">打开行动工具箱 →</a></section>'''
+<section id="problems"><div class="eyebrow">按问题阅读</div><h2>不必从头读到尾</h2><p>先看和你眼前事务最有关的章节，再决定是否继续追问。每个入口都可以根据实际情况跳转。</p><div class="problem-grid">{probs}</div></section><section class="search-area"><div class="eyebrow">七类高频问题</div><h2>问题复杂时，再读一篇完整推演</h2><p>七类高频问题专题分别说明不同情境、组织责任与风险边界；可先通过自然语言搜索，或直接查看专题与情境练习。</p><a class="primary" href="deep/index.html">打开七类问题深读 →</a> <a class="secondary" href="practice.html">练习21个实际问题情境 →</a></section><section id="read"><div class="eyebrow">全书目录</div><h2>十辑，循序理解大学生活中的关系、规则与选择</h2><p>章节并非能力等级，也没有固定阅读年龄、年级或先后阶段。</p>{part_section}</section>
+<section class="bottom-banner"><h2>遇到难事，可以先拿出一张工具卡。</h2><p>把事实、解释、权责、备选行动和反馈写清楚；可以直接打印，不必填写真实姓名或敏感资料。</p><a class="primary" href="tools/index.html">打开行动工具箱 →</a> <a href="afterword.html">全书结语 →</a></section>'''
     (DOCS/'index.html').write_text(html_shell('首页',body,'.'),encoding='utf8')
 
 def build():
@@ -107,9 +116,13 @@ def build():
         render_ch(d,ds)
     main_index(ds)
     build_deep()
+    build_volumes()
     pre=(CONTENT/'guides'/'preface.md').read_text(encoding='utf8')
     theory=(CONTENT/'guides'/'model.md').read_text(encoding='utf8')
-    chapters='\n\n---\n\n'.join(clean_front(d['markdown']) for d in ds)
+    chapters='\n\n---\n\n'.join((('\n\n'+(CONTENT/'volumes'/f'part{d["part"]:02d}.md').read_text(encoding='utf8')+'\n\n') if (d['id']-1)%5==0 else '')+clean_front(d['markdown']) for d in ds)
+    afterword=(CONTENT/'guides'/'afterword.md').read_text(encoding='utf8')
+    chapters+='\n\n---\n\n'+afterword
+    (DOCS/'afterword.html').write_text(html_shell('结语','<div class="guide"><article class="bookarticle">'+md(afterword)+'</article></div>','.'),encoding='utf8')
     whole='# 走进大学，学会与世界相处\n\n'+'基于SSCM大学生社会化网络认知模型的成长与行动指南\n\n'+pre+'\n\n---\n\n'+theory+'\n\n---\n\n'+chapters
     (ROOT/'BOOK_FULL.md').write_text(whole,encoding='utf8')
     shifted=re.sub(r'^(#{1,5}) (.+)$',lambda m:'#'+m.group(1)+' '+m.group(2), pre+'\n\n---\n\n'+theory+'\n\n---\n\n'+chapters, flags=re.M)

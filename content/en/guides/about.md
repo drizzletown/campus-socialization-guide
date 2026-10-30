@@ -1,19 +1,19 @@
-# About This Guide
+# About This Book
 
-**Entering University, Learning to Live with the World** is a practical companion for students learning to understand relationships, rules, choices and shared responsibility. It includes 50 chapters, seven topic guides, 12 editable worksheets, 12 worked cases and scenario exercises.
+**Entering University, Learning to Live with the World** is organized into ten parts and fifty chapters, with a substantial introduction to each part and an afterword. Seven topic guides, worked cases, worksheets and exercises help readers apply ideas when a concrete situation requires further attention.
 
-## A starting point, not a judgment
+## A way to understand situations
 
-The guide uses the Student Socialization Cognitive Model (SSCM) to examine capability (C), accessible networks (N), roles and authority (R), actual contribution (V), and autonomy of action (A). It encourages fact-checking, comparing explanations, choosing bounded action and revising decisions after feedback. These are tools for reflection, not personality or maturity scores.
+The Student Socialization Cognitive Model (SSCM) considers capability, meaningful networks and access, roles and authority, actual contribution, and informed autonomy. The model also examines connections, learning rules, exchanges, evolving roles and the creation of new networks. These concepts help distinguish different conditions affecting a decision; they do not measure personality or rank social maturity.
 
-## Reading and privacy
+A reliable response to a difficult event separates facts from interpretations, checks the relevant responsibilities and rules, compares possible actions and revises the decision after feedback. Sometimes participation is appropriate; in other cases negotiation, formal support, postponement or withdrawal may be safer and more responsible.
 
-You may start from any relevant situation. The website does not ask you to register. Chapter completion markers are stored only in the current browser; worksheet text is not submitted or automatically saved. Do not post identifying details, confidential documents or private messages in public issue reports.
+## Privacy and professional limits
 
-## Important limits
+No registration is needed. Reading markers stay in the browser and worksheet entries are not automatically transmitted or saved. Please do not include confidential or identifying personal information in public feedback.
 
-Illustrative cases are not individual diagnoses. Institutional rules depend on the school and jurisdiction. For legal, medical, professional safety and disciplinary matters, consult authorized sources and appropriate professionals. In an emergency, contact local emergency services.
+The cases are illustrative and do not replace investigation or individualized professional advice. Verify current rules and consult authorized or qualified services when health, law, employment, safety or institutional decisions are involved. In an emergency, seek appropriate local emergency assistance.
 
-## Rights and reuse
+## Copyright
 
-The text is freely viewable on this website. That does not in itself authorize redistribution, adaptation or commercial reuse. Please consult `COPYRIGHT.md` in the GitHub repository for current rights information.
+Public viewing does not grant permission to reproduce, adapt or commercially redistribute the material. See the repository's [COPYRIGHT.md](https://github.com/drizzletown/campus-socialization-guide/blob/main/COPYRIGHT.md).

@@ -6,6 +6,7 @@ Edit Chinese content/partXX/chXX.md and English content/en/partXX/chXX.md.
 from pathlib import Path
 from html import escape as esc
 import os,re,json,shutil
+from volume_intros import EN as VOLUME_INTROS_EN
 import mistune
 
 ROOT=Path(__file__).parent; DOC=ROOT/'docs'; EN=DOC/'en'; CEN=ROOT/'content/en'
@@ -43,14 +44,14 @@ def chapters(ds):
   nextp=f'<a href="ch{n+1:02d}.html" rel="next">Next →</a>' if n<50 else '<span></span>'
   deep=''.join(f'<a href="../deep/{slug}.html">{esc(title)} ↗</a> ' for slug,title,ids in DEEP if n in ids)
   more=f'<div class="info"><strong>Further reading:</strong> {deep}</div>' if deep else ''
-  body=f'''<div class="read-layout"><aside class="bookside"><a href="../index.html#part{p}">← Part {p}: {esc(VOL[p-1])}</a><h3>In this part</h3>{sidenav}<a href="../tools/index.html">Worksheets ↗</a></aside><div class="reader"><div class="chapter-meta">Part {p} · {esc(VOL[p-1])}</div><div class="reading-actions"><span>Chapter {n} of 50</span><button type="button" data-complete="{n}">Mark as read</button><button type="button" data-print="true">Print</button></div><article class="bookarticle">{MD(d['text'])}</article>{more}<div class="chapter-nav">{prev}{nextp}</div></div></div>'''
+  body=f'''<div class="read-layout"><aside class="bookside"><a href="../index.html#part{p}">← Part {p}: {esc(VOL[p-1])}</a><h3>In this part</h3><a href="../volumes/part{p:02d}.html">Part introduction ↗</a>{sidenav}<a href="../tools/index.html">Worksheets ↗</a></aside><div class="reader"><div class="chapter-meta">Part {p} · {esc(VOL[p-1])}</div><div class="reading-actions"><span>Chapter {n} of 50</span><button type="button" data-complete="{n}">Mark as read</button><button type="button" data-print="true">Print</button></div><article class="bookarticle">{MD(d['text'])}</article>{more}<div class="chapter-nav">{prev}{nextp}</div>{'<p><a href="../afterword.html">Read the afterword →</a></p>' if n==50 else ''}</div></div>'''
   write(f'book/ch{n:02d}.html',d['title'],body)
 
 def home(ds):
  parts=[]
  for p,vol in enumerate(VOL,1):
   entries=''.join(f'<a class="chlink" href="book/ch{x["id"]:02d}.html"><span>{x["id"]:02d}</span>{esc(x["title"])}<span aria-hidden="true">↗</span></a>' for x in ds if x['part']==p)
-  parts.append(f'<section class="part-block" id="part{p}"><div><div class="eyebrow">PART {p:02d}</div><h3>{esc(vol)}</h3><p>Five practical chapters about real situations, responsibilities and choices.</p></div><div class="chapterlist">{entries}</div></section>')
+  parts.append(f'<section class="part-block" id="part{p}"><div><div class="eyebrow">PART {p:02d}</div><h3>{esc(vol)}</h3><p>{esc(VOLUME_INTROS_EN[p-1])}</p><p><a href="volumes/part{p:02d}.html">Read the part introduction →</a></p></div><div class="chapterlist">{entries}</div></section>')
  topics=[('Getting started with university',[1,2,5,6,11]),('Course questions and grades',[7,8,9,41]),('Roommates and shared living',[11,18,44]),('Friends and personal boundaries',[16,19,20,42]),('Research and project entry',[26,27,28]),('Student clubs and authority',[21,22,24,25]),('AI, online conduct and privacy',[10,31,34,35]),('Major and postgraduate choices',[36,37,48]),('Internships and jobs',[30,38,39]),('Harassment, rights and safety',[41,42,44,45]),('Money and part-time work',[13,43]),('Life after graduation',[46,49,50])]
  t=''.join(f'<div class="problem"><div>{esc(label)}</div><p>{" · ".join(f"<a href=\"book/ch{i:02d}.html\">{i:02d}</a>" for i in ids)}</p></div>' for label,ids in topics)
  body=f'''<section class="hero"><div class="eyebrow">STUDENT SOCIALIZATION COGNITIVE MODEL · SSCM</div><h1>Entering University,<em> Learning to Live with the World.</em></h1><p class="lead">A practical guide to learning, living, relationships, responsibility and informed choice. Explore 50 chapters in ten parts, seven detailed topic guides, worked cases and worksheets. There is no personality ranking or requirement to become more outgoing.</p><div class="hero-actions"><a class="primary" href="book/ch01.html">Read chapter one →</a><a class="secondary" href="decision-lab.html">I have a specific problem</a><a class="secondary" href="book-all.html">Read the complete book</a></div><div class="hero-points"><div><b>Observe</b><span>Find facts and distinguish assumptions</span></div><div><b>Understand</b><span>Identify skills, access, roles and rules</span></div><div><b>Act</b><span>Take a manageable, informed step</span></div><div><b>Revise</b><span>Adjust after receiving feedback</span></div></div></section>
@@ -58,9 +59,15 @@ def home(ds):
 <section id="topics"><div class="eyebrow">FIND BY SITUATION</div><h2>You don't have to read in order</h2><p>Choose the issue closest to your situation, then check whether the facts really match.</p><div class="problem-grid">{t}</div></section>
 <section class="search-area"><div class="eyebrow">GO DEEPER</div><h2>Some situations need more than a short answer</h2><p>Explore seven detailed guides on academic support, housing, research, organizations, relationships, careers and rights.</p><a class="primary" href="deep/index.html">Seven detailed topic guides →</a> <a class="secondary" href="practice.html">Scenario practice →</a></section>
 <section id="read"><div class="eyebrow">TABLE OF CONTENTS</div><h2>Ten parts, fifty chapters</h2><p>Chapters are topics, not levels of maturity or a required progression.</p>{''.join(parts)}</section>
-<section class="bottom-banner"><h2>Use a worksheet when your thoughts feel tangled.</h2><p>Write down facts, responsibilities, possible explanations and one manageable next step. You can print worksheets without creating an account.</p><a class="primary" href="tools/index.html">Open the worksheets →</a></section>'''
+<section class="bottom-banner"><h2>Use a worksheet when your thoughts feel tangled.</h2><p>Write down facts, responsibilities, possible explanations and one manageable next step. You can print worksheets without creating an account.</p><a class="primary" href="tools/index.html">Open the worksheets →</a> <a href="afterword.html">Read the afterword →</a></section>'''
  write('index.html','Home',body)
  (EN/'search-index.json').write_text(json.dumps([{'id':d['id'],'title':d['title'],'part':d['part'],'text':d['text']} for d in ds],ensure_ascii=False),encoding='utf8')
+
+def volume_pages():
+ for p in range(1,11):
+  source=(CEN/'volumes'/f'part{p:02d}.md').read_text(encoding='utf8')
+  body='<div class="guide"><p><a href="../index.html#part'+str(p)+'">← Table of contents</a></p><article class="bookarticle">'+MD(source)+'</article><p><a href="../book/ch'+f'{(p-1)*5+1:02d}'+'.html">Start this part →</a></p></div>'
+  write(f'volumes/part{p:02d}.html',f'Part {p} introduction',body)
 
 def deep():
  cards=[]
@@ -73,10 +80,11 @@ def deep():
  write('deep/index.html','Detailed Topic Guides','<div class="guide"><div class="eyebrow">DEEP READING</div><h1>Seven practical topic guides</h1><p>When a situation is complex, compare different causes, safe options and institutional responsibilities.</p><div class="chapterlist">'+''.join(cards)+'</div></div>')
 
 def guides(ds):
- for name,title in [('preface','Start Here'),('model','The SSCM Framework'),('about','About This Guide'),('campus-policies','Checking University Policies')]:
+ for name,title in [('preface','Start Here'),('model','The SSCM Framework'),('about','About This Guide'),('campus-policies','Checking University Policies'),('afterword','Afterword')]:
   content=(CEN/'guides'/f'{name}.md').read_text(encoding='utf8')
   write(name+'.html',title,'<div class="guide"><article class="bookarticle">'+MD(content)+'</article><p><a href="index.html">← Back to home</a></p></div>')
- allbook='# Entering University, Learning to Live with the World\n\n'+(CEN/'guides/preface.md').read_text(encoding='utf8')+'\n\n---\n\n'+(CEN/'guides/model.md').read_text(encoding='utf8')+'\n\n---\n\n'+'\n\n---\n\n'.join(d['text'] for d in ds)
+ allbook='# Entering University, Learning to Live with the World\n\n'+(CEN/'guides/preface.md').read_text(encoding='utf8')+'\n\n---\n\n'+(CEN/'guides/model.md').read_text(encoding='utf8')+'\n\n---\n\n'+'\n\n---\n\n'.join((('\n\n'+(CEN/'volumes'/f'part{d["part"]:02d}.md').read_text(encoding='utf8')+'\n\n') if (d['id']-1)%5==0 else '')+d['text'] for d in ds)
+ allbook+='\n\n---\n\n'+(CEN/'guides/afterword.md').read_text(encoding='utf8')
  (ROOT/'BOOK_EN.md').write_text(allbook,encoding='utf8')
  write('book-all.html','Complete Book','<div class="guide"><article class="bookarticle">'+MD('\n'.join(line if line.startswith('# Entering University') else ('#'+line if line.startswith('# ') else line) for line in allbook.splitlines()))+'</article></div>')
 
@@ -101,34 +109,38 @@ def cases():
   cards.append(f'<a class="tool-card" href="case{i:02d}.html"><b>CASE {i:02d}</b><h3>{esc(title)}</h3><p>{esc(event)}</p></a>')
  write('cases/index.html','Worked Cases','<div class="guide"><div class="eyebrow">WORKED EXAMPLES</div><h1>Twelve cases in context</h1><p>These hypothetical situations illustrate how different facts lead to different choices.</p></div><div class="tool-grid">'+''.join(cards)+'</div>')
 
+def chapter_explanation(d):
+ txt=d['text']
+ blocks=re.split(r'(?m)^## ',txt)
+ opening=blocks[0].split('\n\n',1)[-1].strip()
+ content=blocks[1].split('\n',1)[1].strip() if len(blocks)>1 else opening
+ paragraphs=[x.strip() for x in content.split('\n\n') if x.strip()]
+ argument=paragraphs[0] if paragraphs else opening
+ action=next((x for x in reversed(paragraphs) if x.startswith('For this problem, begin')), 'Review the facts, rules and possible support before acting.')
+ warning=paragraphs[-1] if paragraphs else 'Use appropriate support where needed.'
+ alt=next((x for x in paragraphs if x.startswith('If ')),paragraphs[1] if len(paragraphs)>1 else argument)
+ return (opening,argument,alt,action,warning)
+
 def practice(ds):
  tests=[('L01','I want to ask a professor but do not know what to say',7),('L02','My submitted assignment has a zero grade',8),('L03','A team member never received repository access',9),('D01','My roommate keeps me awake on late-night calls',11),('D02','My roommate threatens to reveal private information',42),('D03','Someone takes my belongings and excludes me',18),('R01','How can I approach a research supervisor?',26),('R02','My supervisor wants lab data on a personal drive',28),('R03','A senior student offers authorship without work',28),('C01','The club asks me to pay activity costs up front',24),('C02','Only friends of the officers receive recognition',41),('C03','A team outing is treated as compulsory',25),('P01','My partner demands my phone password',20),('P02','An ex waits outside my room after I said no',42),('P03','My former partner will not stop contacting me',19),('J01','I receive no answers to job applications',38),('J02','An interviewer requests a training deposit',38),('J03','My internship demands client data by personal email',30),('Q01','A scholarship award appears miscalculated',41),('Q02','I fear retaliation after reporting a teacher',42),('Q03','Someone collapses during a campus activity',45)]
- assert len(tests)==21
+ cats=[('Academic life','L'),('Shared housing','D'),('Research','R'),('Student organizations','C'),('Relationships','P'),('Jobs and internships','J'),('Rights and safety','Q')]
  sections=[]
- categories=[('Academic life','L'),('Shared housing','D'),('Research','R'),('Student organizations','C'),('Relationships','P'),('Jobs and internships','J'),('Rights and safety','Q')]
- for cat,prefix in categories:
+ for label,prefix in cats:
   cards=[]
   for code,title,n in tests:
    if not code.startswith(prefix):continue
-   d=ds[n-1];paras=re.findall(r'(?<=\n\n)[^#\n>][^\n]+',d['text']);scene=paras[0] if paras else title
-   parts=re.split(r'^## ',d['text'],flags=re.M);overview=next((p.split('\n\n',1)[1].strip().split('\n\n')[0] for p in parts if p.startswith('Understand the situation')),title)
-   action=next((p.split('\n\n',1)[1].strip().split('\n\n##')[0] for p in parts if p.startswith('Actions you can take')),'')
-   safety=next((p.split('\n\n',1)[1].strip().split('\n\n')[0] for p in parts if p.startswith('Boundaries and safety')),'')
-   cards.append(f'''<article class="trial-card"><h3>{esc(code)} · {esc(title)}</h3><p><strong>Situation:</strong> {esc(scene)}</p><p>Before opening the answer, consider what is known, what is assumed, who has authority, and what you could safely do.</p><details><summary>Show a possible response</summary><p><b>Possible explanation:</b> {esc(overview)}</p><p><b>Action:</b></p>{MD(action)}<p><b>Boundary:</b> {esc(safety)}</p><p><a href="book/ch{n:02d}.html">Read Chapter {n:02d} →</a></p></details></article>''')
-  sections.append(f'<section class="trial-group"><h2>{esc(cat)}</h2><div class="trial-grid">{"".join(cards)}</div></section>')
- write('practice.html','Scenario Practice','<div class="guide"><div class="eyebrow">PRACTICE</div><h1>Try a situation before reading its discussion</h1><p>Twenty-one hypothetical student questions. Think about the facts, possible explanations, the first practical step and any safety boundary; then compare your reasoning with a suggested response. There is no score.</p></div>'+''.join(sections))
-
+   scene,argument,alt,action,warning=chapter_explanation(ds[n-1])
+   cards.append(f'''<article class="trial-card"><h3>{esc(code)} · {esc(title)}</h3><p>Which facts are missing, and who can safely act?</p><details><summary>Compare a possible response</summary><p><b>Context:</b> {esc(scene)}</p><p><b>Explanation:</b> {esc(argument)}</p><p><b>How conditions matter:</b> {esc(alt)}</p><p><b>Practical step:</b> {esc(action)}</p><p><b>Boundary:</b> {esc(warning)}</p><p><a href="book/ch{n:02d}.html">Explore Chapter {n:02d} →</a></p></details></article>''')
+  sections.append(f'<section class="trial-group"><h2>{esc(label)}</h2><div class="trial-grid">{"".join(cards)}</div></section>')
+ write('practice.html','Scenario Practice','<div class="guide"><div class="eyebrow">PRACTICE</div><h1>Try a situation before reading its discussion</h1><p>Compare possible causes, the first practical step and appropriate boundaries. There is no personality score.</p></div>'+''.join(sections))
 
 def decision(ds):
  nums=[7,9,11,13,19,22,26,28,30,35,38,41]
  cards=[]
  for n in nums:
-  d=ds[n-1];txt=d['text']
-  def sec(k):
-   m=re.search(r'^## '+re.escape(k)+r'\n\n(.+?)(?=\n\n## |\Z)',txt,re.M|re.S)
-   return m.group(1).strip() if m else ''
-  cards.append(f'''<article class="lab-card"><div class="eyebrow">SITUATION {n:02d}</div><h2>{esc(d['title'])}</h2><p>{esc(sec('A situation you may recognize'))}</p><details><summary>Compare causes and options</summary><p>{esc(sec('When conditions differ'))}</p>{MD(sec('Actions you can take'))}<p><strong>Boundary:</strong> {esc(sec('Boundaries and safety'))}</p></details><a href="book/ch{n:02d}.html">Read Chapter {n:02d} →</a></article>''')
- write('decision-lab.html','Scenario Guide','<div class="guide"><div class="eyebrow">MAKE A SITUATED DECISION</div><h1>Similar problems can have different causes</h1><p>Choose a situation, consider alternative explanations and decide which action would be safe and within your authority.</p><p class="info">An immediate threat or medical emergency calls for local emergency help, not a routine discussion exercise.</p></div><div class="lab-grid">'+''.join(cards)+'</div>')
+  d=ds[n-1];scene,argument,alt,action,warning=chapter_explanation(d)
+  cards.append(f'''<article class="lab-card"><div class="eyebrow">SITUATION {n:02d}</div><h2>{esc(d['title'])}</h2><p>{esc(scene)}</p><details><summary>Compare causes and options</summary><p>{esc(argument)}</p><p>{esc(alt)}</p><p>{esc(action)}</p><p><strong>Boundary:</strong> {esc(warning)}</p></details><a href="book/ch{n:02d}.html">Read Chapter {n:02d} →</a></article>''')
+ write('decision-lab.html','Scenario Guide','<div class="guide"><div class="eyebrow">SITUATED JUDGMENT</div><h1>Similar problems can have different causes</h1><p>Examine each example, the available evidence and the scope of appropriate action.</p><p class="info">Immediate threats and medical emergencies require local emergency help, not a routine discussion exercise.</p></div><div class="lab-grid">'+''.join(cards)+'</div>')
 
 def client_script():
  code=r'''(()=>{'use strict';const key='sscm-read-en-1';document.querySelectorAll('[data-print]').forEach(b=>b.addEventListener('click',()=>window.print()));const b=document.querySelector('[data-complete]');if(b){const n=b.dataset.complete;let done=[];try{done=JSON.parse(localStorage.getItem(key)||'[]')}catch{}const paint=()=>{const y=done.includes(n);b.classList.toggle('is-done',y);b.textContent=y?'Read ✓ (undo)':'Mark as read'};b.addEventListener('click',()=>{done=done.includes(n)?done.filter(x=>x!==n):[...done,n];try{localStorage.setItem(key,JSON.stringify(done))}catch{}paint()});paint()}
@@ -178,7 +190,7 @@ def clean_zh():
 
 def main():
  ds=load();EN.mkdir(parents=True,exist_ok=True)
- chapters(ds);home(ds);deep();guides(ds);tools();cases();practice(ds);decision(ds);client_script();clean_zh()
+ chapters(ds);home(ds);volume_pages();deep();guides(ds);tools();cases();practice(ds);decision(ds);client_script();clean_zh()
  css=DOC/'assets/site.css';txt=css.read_text(encoding='utf8')
  extra='\n/* Bilingual public navigation and readable English typography */\n.topbar nav .lang-toggle{border:1px solid var(--accent);border-radius:18px;padding:3px 12px;color:var(--accent);font-weight:750;white-space:nowrap}.english-edition .bookarticle{font-family:Georgia,"Times New Roman",serif;line-height:1.85;letter-spacing:0}.english-edition .bookarticle h1,.english-edition .bookarticle h2,.english-edition .bookarticle h3{font-family:system-ui,-apple-system,sans-serif}.english-edition .hero h1{letter-spacing:-.035em}.english-edition .part-block{gap:30px}@media(max-width:560px){.topbar nav .lang-toggle{padding:2px 9px}}\n'
  if '/* Bilingual public navigation' not in txt:css.write_text(txt+extra,encoding='utf8')

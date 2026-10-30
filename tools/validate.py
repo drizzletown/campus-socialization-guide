@@ -4,6 +4,9 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import unquote,urlparse
 import json,re
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+# Long-form chapters have editorial headings chosen individually
 root=Path(__file__).resolve().parents[1];docs=root/'docs'
 class Links(HTMLParser):
  def __init__(self):super().__init__();self.urls=[]
@@ -13,7 +16,7 @@ class Links(HTMLParser):
    if key in props:self.urls.append(props[key])
 
 files=list(docs.rglob('*.html'))
-assert len(files)==184,(len(files),'expected 92 zh + 92 en HTML pages')
+assert len(files)==206,(len(files),'expected 103 zh + 103 en HTML pages')
 assert len(list((docs/'en/book').glob('ch*.html')))==50
 assert len(list((root/'content/en').glob('part*/ch*.md')))==50
 assert len(list((docs/'en/deep').glob('*.html')))==8
@@ -61,8 +64,10 @@ assert len(whole)>45000
 for i in range(1,51):assert f'# 第{i:02d}章 ' in whole
 for i in range(1,51):
  s=(root/f'content/part{(i-1)//5+1:02d}/ch{i:02d}.md').read_text(encoding='utf8')
- for token in ('## 一个可能遇到的现场','## 把问题看清楚','## 继续往深处想','## 用 SSCM 五维辨认当前条件','## 可以实行的四步','## 需要守住的边界'):
-  assert token in s,(i,token)
- assert all(f'{x}：' in s for x in 'CNRVA')
- assert '### 深入推演：' in s or '### 情境对照：' in s, (i,'missing scenario reasoning')
-print(f'PASS: {len(files)} HTML files, 50 chapters, 12 worksheets, 12 cases, all local links resolved, full book length {len(whole):,} chars')
+ assert len(__import__('re').findall(r'^## ',s,__import__('re').M))==2,(i,'expected two original thematic sections')
+ assert len(s)>=1700,(i,'too brief',len(s))
+ assert '## 从眼前的事情说起' not in s and '## 不同条件下怎样判断' not in s and '## 从判断走向行动' not in s
+for p in range(1,11):
+ assert (docs/'volumes'/f'part{p:02d}.html').is_file()
+ assert (docs/'en/volumes'/f'part{p:02d}.html').is_file()
+print(f'PASS: {len(files)} HTML files, 50 long-form chapters, 10 bilingual volume introductions, 12 worksheets, 12 cases, all local links resolved, full book length {len(whole):,} chars')
